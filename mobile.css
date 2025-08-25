@@ -4,10 +4,16 @@
 
 /* CSS Variables pour mobile */
 :root {
-    --mobile-button-height: 60px;
-    --mobile-bet-button-size: 80px;
-    --mobile-spacing: 12px;
-    --mobile-border-radius: 16px;
+    --mobile-button-height: 70px;
+    --mobile-bet-button-size: 90px;
+    --mobile-spacing: 16px;
+    --mobile-border-radius: 20px;
+    --primary-green: #28a745;
+    --primary-gold: #ffc107;
+    --primary-red: #dc3545;
+    --primary-blue: #007bff;
+    --dark-bg: #1a1a1a;
+    --light-text: #ffffff;
 }
 
 /* Optimisations générales mobile */
@@ -22,117 +28,142 @@
         font-size: 16px;
         line-height: 1.4;
         overflow-x: hidden;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+        color: var(--light-text) !important;
     }
 
     /* Container principal */
     .container {
-        padding: 8px;
+        padding: 12px;
         max-width: 100%;
         margin: 0;
     }
 
-    /* Header mobile */
+    /* Header mobile TRÈS VISIBLE */
     h1 {
-        font-size: 1.6rem !important;
-        margin-bottom: 8px !important;
+        font-size: 2rem !important;
+        margin-bottom: 16px !important;
         text-align: center;
-        padding: 12px 0;
-        background: linear-gradient(135deg, #1a5f3f 0%, #2d8f5f 100%);
-        color: #ffd700;
+        padding: 20px 0;
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-blue) 100%) !important;
+        color: var(--light-text) !important;
         border-radius: var(--mobile-border-radius);
         margin: 0 0 var(--mobile-spacing) 0;
-        box-shadow: 0 4px 15px rgba(26, 95, 63, 0.3);
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        border: 3px solid var(--primary-gold);
+        font-weight: 800;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
     }
 
-    /* BOUTONS DE MISE - PRIORITÉ ABSOLUE */
+    /* BOUTONS DE MISE - SUPER VISIBLES */
     .bet-options {
         display: grid !important;
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 8px !important;
-        padding: 12px !important;
-        background: rgba(0, 0, 0, 0.1) !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+        padding: 20px !important;
+        background: rgba(255, 255, 255, 0.1) !important;
         border-radius: var(--mobile-border-radius) !important;
         margin-bottom: var(--mobile-spacing) !important;
+        border: 2px solid var(--primary-gold) !important;
     }
 
     .bet-btn {
         width: var(--mobile-bet-button-size) !important;
         height: var(--mobile-bet-button-size) !important;
-        font-size: 1.1rem !important;
-        font-weight: 700 !important;
+        font-size: 1.5rem !important;
+        font-weight: 900 !important;
         border-radius: 50% !important;
-        border: 3px solid #ffd700 !important;
-        background: linear-gradient(135deg, #1a5f3f 0%, #2d8f5f 100%) !important;
-        color: #ffd700 !important;
+        border: 4px solid var(--primary-gold) !important;
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-blue) 100%) !important;
+        color: var(--light-text) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         touch-action: manipulation !important;
         cursor: pointer !important;
-        transition: all 0.2s ease !important;
+        transition: all 0.3s ease !important;
         margin: 0 auto !important;
         min-height: var(--mobile-bet-button-size) !important;
         min-width: var(--mobile-bet-button-size) !important;
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;
     }
 
     .bet-btn:active {
-        transform: scale(0.9) !important;
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6) !important;
+        transform: scale(0.85) !important;
+        box-shadow: 0 0 30px var(--primary-gold) !important;
     }
 
     .bet-btn.active {
-        background: #ffd700 !important;
-        color: #1a5f3f !important;
-        box-shadow: 0 0 25px rgba(255, 215, 0, 0.8) !important;
+        background: linear-gradient(135deg, var(--primary-gold) 0%, #ffeb3b 100%) !important;
+        color: var(--dark-bg) !important;
+        border-color: var(--light-text) !important;
+        box-shadow: 0 0 40px var(--primary-gold) !important;
+        animation: pulse 1s infinite !important;
     }
 
-    /* Bouton X spécial */
+    @keyframes pulse {
+        0% { box-shadow: 0 0 20px var(--primary-gold); }
+        50% { box-shadow: 0 0 40px var(--primary-gold); }
+        100% { box-shadow: 0 0 20px var(--primary-gold); }
+    }
+
+    /* Bouton X TRÈS VISIBLE */
     .bet-btn:last-child {
-        background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%) !important;
-        color: white !important;
-        border-color: #dc143c !important;
-        font-size: 1.4rem !important;
+        background: linear-gradient(135deg, var(--primary-red) 0%, #ff6b6b 100%) !important;
+        color: var(--light-text) !important;
+        border-color: var(--light-text) !important;
+        font-size: 2rem !important;
+        font-weight: 900 !important;
     }
 
-    /* CONTRÔLES PRINCIPAUX MOBILE */
+    /* CONTRÔLES PRINCIPAUX TRÈS VISIBLES */
     .main-controls {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px !important;
-        padding: 16px !important;
-        background: rgba(0, 0, 0, 0.15) !important;
+        gap: 16px !important;
+        padding: 20px !important;
+        background: rgba(255, 255, 255, 0.1) !important;
         border-radius: var(--mobile-border-radius) !important;
         margin-bottom: var(--mobile-spacing) !important;
+        border: 2px solid var(--primary-gold) !important;
     }
 
     .main-controls button {
         height: var(--mobile-button-height) !important;
-        font-size: 1rem !important;
-        font-weight: 600 !important;
-        border-radius: 12px !important;
-        border: 2px solid #ffd700 !important;
-        background: linear-gradient(135deg, #1a5f3f 0%, #2d8f5f 100%) !important;
-        color: #ffd700 !important;
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        border-radius: 15px !important;
+        border: 3px solid var(--primary-gold) !important;
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-blue) 100%) !important;
+        color: var(--light-text) !important;
         touch-action: manipulation !important;
         cursor: pointer !important;
-        transition: all 0.2s ease !important;
+        transition: all 0.3s ease !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         text-align: center !important;
-        padding: 0 12px !important;
+        padding: 0 16px !important;
         min-height: var(--mobile-button-height) !important;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3) !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
     }
 
     .main-controls button:active {
-        transform: scale(0.95) !important;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.4) !important;
+        transform: scale(0.9) !important;
+        box-shadow: 0 0 25px var(--primary-gold) !important;
     }
 
-    /* PLATEAU DE JEU MOBILE */
+    .main-controls button:hover {
+        background: linear-gradient(135deg, var(--primary-gold) 0%, #ffeb3b 100%) !important;
+        color: var(--dark-bg) !important;
+    }
+
+    /* PLATEAU DE JEU ULTRA-VISIBLE */
     .game-board {
         display: block !important;
-        margin-bottom: 15px !important;
+        margin-bottom: 20px !important;
     }
 
     .boxes-container {
@@ -140,134 +171,192 @@
         overflow-x: auto !important;
         scroll-snap-type: x mandatory !important;
         -webkit-overflow-scrolling: touch !important;
-        gap: 12px !important;
-        padding: 10px 0 !important;
-        margin-bottom: 15px !important;
+        gap: 16px !important;
+        padding: 16px 0 !important;
+        margin-bottom: 20px !important;
     }
 
     .game-box {
-        flex: 0 0 280px !important;
-        min-height: 180px !important;
+        flex: 0 0 320px !important;
+        min-height: 220px !important;
         scroll-snap-align: center !important;
-        background: linear-gradient(135deg, rgba(26, 95, 63, 0.15) 0%, rgba(45, 143, 95, 0.15) 100%) !important;
-        border: 2px solid rgba(255, 215, 0, 0.3) !important;
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.2) 0%, rgba(0, 123, 255, 0.2) 100%) !important;
+        border: 3px solid var(--primary-gold) !important;
         border-radius: var(--mobile-border-radius) !important;
-        padding: 12px !important;
+        padding: 16px !important;
         position: relative !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
     }
 
     .box-header {
-        font-size: 1rem !important;
-        font-weight: 600 !important;
-        margin-bottom: 8px !important;
+        font-size: 1.3rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 12px !important;
         text-align: center !important;
-        color: #ffd700 !important;
+        color: var(--primary-gold) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        padding: 8px !important;
+        border-radius: 12px !important;
+        border: 2px solid var(--primary-gold) !important;
     }
 
     .box-cards {
-        min-height: 80px !important;
+        min-height: 100px !important;
         display: flex !important;
         flex-wrap: wrap !important;
-        gap: 4px !important;
+        gap: 6px !important;
         justify-content: center !important;
-        margin-bottom: 12px !important;
+        margin-bottom: 16px !important;
+        background: rgba(0, 0, 0, 0.2) !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        border: 1px solid var(--primary-gold) !important;
     }
 
-    /* CARTES MOBILE */
+    /* CARTES TRÈS VISIBLES */
     .card {
-        width: 40px !important;
-        height: 56px !important;
-        font-size: 0.8rem !important;
-        border-radius: 8px !important;
+        width: 45px !important;
+        height: 65px !important;
+        font-size: 1rem !important;
+        font-weight: 700 !important;
+        border-radius: 12px !important;
         touch-action: manipulation !important;
-        transition: transform 0.2s ease !important;
+        transition: transform 0.3s ease !important;
+        border: 2px solid var(--primary-gold) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
     }
 
     .card:active {
-        transform: scale(1.1) !important;
+        transform: scale(1.15) !important;
+        box-shadow: 0 0 20px var(--primary-gold) !important;
     }
 
-    /* CONTRÔLES DES BOXES MOBILE */
+    /* CONTRÔLES DES BOXES ULTRA-VISIBLES */
     .box-controls {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 8px !important;
-        margin-top: 12px !important;
+        gap: 12px !important;
+        margin-top: 16px !important;
     }
 
     .box-controls button {
-        height: 48px !important;
-        font-size: 0.9rem !important;
-        font-weight: 600 !important;
-        border-radius: 10px !important;
-        border: 2px solid #ffd700 !important;
-        background: linear-gradient(135deg, #1a5f3f 0%, #2d8f5f 100%) !important;
-        color: #ffd700 !important;
+        height: 60px !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        border-radius: 15px !important;
+        border: 3px solid var(--primary-gold) !important;
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-blue) 100%) !important;
+        color: var(--light-text) !important;
         touch-action: manipulation !important;
         cursor: pointer !important;
-        transition: all 0.2s ease !important;
-        min-height: 48px !important;
+        transition: all 0.3s ease !important;
+        min-height: 60px !important;
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3) !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
     }
 
     .box-controls button:active {
-        transform: scale(0.95) !important;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.4) !important;
+        transform: scale(0.9) !important;
+        box-shadow: 0 0 20px var(--primary-gold) !important;
     }
 
     .box-controls button:disabled {
-        opacity: 0.5 !important;
+        opacity: 0.3 !important;
         transform: none !important;
+        background: rgba(100, 100, 100, 0.5) !important;
     }
 
-    /* SECTION CROUPIER MOBILE */
+    /* SECTION CROUPIER ULTRA-VISIBLE */
     .dealer-section {
-        background: linear-gradient(135deg, rgba(26, 95, 63, 0.2) 0%, rgba(45, 143, 95, 0.2) 100%) !important;
-        border: 2px solid rgba(255, 215, 0, 0.4) !important;
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.3) 0%, rgba(0, 123, 255, 0.3) 100%) !important;
+        border: 3px solid var(--primary-gold) !important;
         border-radius: var(--mobile-border-radius) !important;
-        padding: 16px !important;
+        padding: 20px !important;
         margin-bottom: var(--mobile-spacing) !important;
         text-align: center !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
     }
 
     .dealer-section h2 {
-        font-size: 1.3rem !important;
-        margin-bottom: 12px !important;
-        color: #ffd700 !important;
+        font-size: 1.6rem !important;
+        margin-bottom: 16px !important;
+        color: var(--primary-gold) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;
+        font-weight: 800 !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        padding: 12px !important;
+        border-radius: 12px !important;
+        border: 2px solid var(--primary-gold) !important;
     }
 
     .dealer-cards {
         display: flex !important;
         justify-content: center !important;
-        gap: 6px !important;
-        margin-bottom: 12px !important;
+        gap: 8px !important;
+        margin-bottom: 16px !important;
+        background: rgba(0, 0, 0, 0.2) !important;
+        padding: 12px !important;
+        border-radius: 12px !important;
+        border: 1px solid var(--primary-gold) !important;
     }
 
-    /* INFORMATIONS ET TOTAUX MOBILE */
+    /* INFORMATIONS ET TOTAUX ULTRA-VISIBLES */
     .box-info {
         display: flex !important;
         justify-content: space-between !important;
-        font-size: 0.9rem !important;
-        margin-bottom: 8px !important;
-        color: #ffd700 !important;
-        font-weight: 600 !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 12px !important;
+        color: var(--primary-gold) !important;
+        font-weight: 800 !important;
+        background: rgba(0, 0, 0, 0.4) !important;
+        padding: 12px !important;
+        border-radius: 12px !important;
+        border: 2px solid var(--primary-gold) !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
     }
 
-    /* NOTIFICATIONS MOBILE */
+    /* NOTIFICATIONS ULTRA-VISIBLES */
     .notification {
         position: fixed !important;
-        bottom: 20px !important;
-        left: 10px !important;
-        right: 10px !important;
+        bottom: 30px !important;
+        left: 16px !important;
+        right: 16px !important;
         z-index: 10000 !important;
-        padding: 16px !important;
-        font-size: 1rem !important;
-        border-radius: 12px !important;
+        padding: 20px !important;
+        font-size: 1.2rem !important;
+        border-radius: 20px !important;
         text-align: center !important;
-        font-weight: 600 !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        font-weight: 700 !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+        border: 3px solid var(--primary-gold) !important;
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-blue) 100%) !important;
+        color: var(--light-text) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;
     }
 
-    /* MODALES MOBILE */
+    /* BOUTON DISTRIBUER ÉNORME */
+    .deal-btn, .btn-deal {
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-blue) 100%) !important;
+        color: var(--light-text) !important;
+        border: 4px solid var(--primary-gold) !important;
+        font-size: 1.4rem !important;
+        font-weight: 900 !important;
+        padding: 20px 40px !important;
+        border-radius: 20px !important;
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4) !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;
+        min-height: 80px !important;
+        width: 100% !important;
+        margin: 20px 0 !important;
+    }
+
+    .deal-btn:active, .btn-deal:active {
+        transform: scale(0.9) !important;
+        box-shadow: 0 0 40px var(--primary-gold) !important;
+    }
+
+    /* MODALES ULTRA-VISIBLES */
     .modal-content {
         width: 95% !important;
         max-width: 95% !important;
@@ -275,68 +364,62 @@
         border-radius: var(--mobile-border-radius) !important;
         max-height: 85vh !important;
         overflow-y: auto !important;
+        background: linear-gradient(135deg, var(--dark-bg) 0%, #2d2d2d 100%) !important;
+        border: 3px solid var(--primary-gold) !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7) !important;
     }
 
     .modal-header {
-        padding: 16px !important;
-        border-bottom: 2px solid rgba(255, 215, 0, 0.3) !important;
+        padding: 20px !important;
+        border-bottom: 3px solid var(--primary-gold) !important;
+        background: rgba(40, 167, 69, 0.2) !important;
     }
 
     .modal-header h3 {
-        font-size: 1.3rem !important;
+        font-size: 1.5rem !important;
         margin: 0 !important;
+        color: var(--primary-gold) !important;
+        font-weight: 800 !important;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8) !important;
     }
 
     .close-btn {
-        width: 36px !important;
-        height: 36px !important;
-        font-size: 1.5rem !important;
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 2rem !important;
         border-radius: 50% !important;
-        border: 2px solid #ffd700 !important;
-        background: #dc143c !important;
-        color: white !important;
+        border: 3px solid var(--primary-gold) !important;
+        background: var(--primary-red) !important;
+        color: var(--light-text) !important;
         cursor: pointer !important;
         touch-action: manipulation !important;
+        font-weight: 900 !important;
+        box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4) !important;
     }
 
-    /* STATS ET TABLEAUX MOBILE */
-    .stat-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px !important;
-        padding: 12px !important;
-    }
-
-    .stat-card {
-        padding: 12px !important;
-        border-radius: 10px !important;
-        text-align: center !important;
-        background: rgba(26, 95, 63, 0.1) !important;
-        border: 1px solid rgba(255, 215, 0, 0.3) !important;
-    }
-
-    /* LANDSCAPE SPÉCIFIQUE */
+    /* LANDSCAPE OPTIMISÉ */
     @media (orientation: landscape) and (max-height: 500px) {
         :root {
-            --mobile-button-height: 50px;
-            --mobile-bet-button-size: 70px;
-            --mobile-spacing: 8px;
+            --mobile-button-height: 60px;
+            --mobile-bet-button-size: 80px;
+            --mobile-spacing: 12px;
         }
 
         h1 {
-            font-size: 1.3rem !important;
-            padding: 8px 0 !important;
+            font-size: 1.5rem !important;
+            padding: 12px 0 !important;
         }
 
         .game-box {
-            min-height: 150px !important;
+            min-height: 180px !important;
         }
 
         .bet-options {
-            padding: 8px !important;
+            padding: 16px !important;
         }
 
         .main-controls {
-            padding: 12px !important;
+            padding: 16px !important;
         }
     }
 }
