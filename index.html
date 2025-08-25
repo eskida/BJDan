@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🎰 Blackjack Français ENHC - Jeu en ligne gratuit</title>
+    <meta name="description" content="Jouez au Blackjack français avec les règles ENHC. 6 boxes simultanées, stratégie de base intégrée, statistiques complètes. Gratuit et sans inscription !">
+    <meta name="keywords" content="blackjack, casino, jeu gratuit, ENHC, stratégie de base, français">
+    <meta name="author" content="BJDan Casino">
+    
+    <!-- PWA et Mobile -->
+    <meta name="theme-color" content="#1a5f3f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Blackjack ENHC">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://votre-username.github.io/BJDan/">
+    <meta property="og:title" content="🎰 Blackjack Français ENHC - Jeu en ligne gratuit">
+    <meta property="og:description" content="Jouez au Blackjack français avec les règles ENHC. 6 boxes simultanées, stratégie de base intégrée !">
+    <meta property="og:image" content="https://votre-username.github.io/BJDan/preview.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://votre-username.github.io/BJDan/">
+    <meta property="twitter:title" content="🎰 Blackjack Français ENHC">
+    <meta property="twitter:description" content="Jouez au Blackjack français avec les règles ENHC. Gratuit et sans inscription !">
+    <meta property="twitter:image" content="https://votre-username.github.io/BJDan/preview.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎰</text></svg>">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- En-tête -->
+        <header class="game-header">
+            <h1>🎰 Blackjack Français ENHC</h1>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">Crédits:</span>
+                    <span class="stat-value" id="credits">1000</span>
+                </div>
+                <div class="controls">
+                    <button id="toggle-strategy" class="btn strategy-btn">👁️</button>
+                    <button id="show-stats" class="btn">📊 Stats</button>
+                    <button id="toggle-probabilities" class="btn probability-btn">📊 Probas</button>
+                    <button id="reset-credits" class="btn">💰 Reset</button>
+                    <button id="reset-stats" class="btn">🔄 Reset Stats</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Zone de jeu principale -->
+        <main class="casino-table">
+            <!-- Croupier -->
+            <section class="dealer-section">
+                <h2>Croupier</h2>
+                <div class="dealer-info">
+                    <span class="dealer-value" id="dealer-value">-</span>
+                </div>
+                <div class="dealer-cards" id="dealer-cards"></div>
+                
+                <!-- Zone d'assurance -->
+                <div class="insurance-offer" id="insurance-offer" style="display: none;">
+                    <div class="insurance-message">
+                        <span>🃏 Le croupier a un As - Voulez-vous prendre une assurance?</span>
+                        <div class="insurance-buttons">
+                            <button id="take-insurance" class="btn insurance-btn">Assurance</button>
+                            <button id="decline-insurance" class="btn insurance-btn">Non merci</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6 Boxes du casino -->
+            <section class="boxes-section">
+                <div class="boxes-container">
+                    <!-- Box 1 -->
+                    <div class="box" id="box-1" data-box="1">
+                        <div class="box-header">
+                            <span class="box-number">1</span>
+                            <div class="box-bet-controls">
+                                <button class="bet-btn" data-box="1" data-amount="5">5</button>
+                                <button class="bet-btn" data-box="1" data-amount="25">25</button>
+                                <button class="bet-btn" data-box="1" data-amount="100">100</button>
+                                <button class="bet-btn clear-bet" data-box="1">✕</button>
+                            </div>
+                        </div>
+                        <div class="box-bet" id="box-bet-1">0</div>
+                        <div class="box-cards" id="box-cards-1"></div>
+                        <div class="box-probabilities" id="box-probabilities-1" style="display: none;">
+                            <div class="probability-item">
+                                <span class="prob-label">Bust:</span>
+                                <span class="prob-value" id="prob-bust-1">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Gagner:</span>
+                                <span class="prob-value" id="prob-win-1">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Push:</span>
+                                <span class="prob-value" id="prob-push-1">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Recomm:</span>
+                                <span class="prob-value" id="prob-action-1">-</span>
+                            </div>
+                        </div>
+                        <div class="box-value" id="box-value-1">-</div>
+                        <div class="box-controls" id="box-controls-1" style="display: none;">
+                            <button class="action-btn hit-btn" data-box="1">Tirer</button>
+                            <button class="action-btn stand-btn" data-box="1">Rester</button>
+                            <button class="action-btn double-btn" data-box="1">Doubler</button>
+                            <button class="action-btn split-btn" data-box="1">Séparer</button>
+                            <button class="action-btn surrender-btn" data-box="1">Abandonner</button>
+                        </div>
+                    </div>
+
+                    <!-- Box 2 -->
+                    <div class="box" id="box-2" data-box="2">
+                        <div class="box-header">
+                            <span class="box-number">2</span>
+                            <div class="box-bet-controls">
+                                <button class="bet-btn" data-box="2" data-amount="5">5</button>
+                                <button class="bet-btn" data-box="2" data-amount="25">25</button>
+                                <button class="bet-btn" data-box="2" data-amount="100">100</button>
+                                <button class="bet-btn clear-bet" data-box="2">✕</button>
+                            </div>
+                        </div>
+                        <div class="box-bet" id="box-bet-2">0</div>
+                        <div class="box-cards" id="box-cards-2"></div>
+                        <div class="box-probabilities" id="box-probabilities-2" style="display: none;">
+                            <div class="probability-item">
+                                <span class="prob-label">Bust:</span>
+                                <span class="prob-value" id="prob-bust-2">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Gagner:</span>
+                                <span class="prob-value" id="prob-win-2">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Push:</span>
+                                <span class="prob-value" id="prob-push-2">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Recomm:</span>
+                                <span class="prob-value" id="prob-action-2">-</span>
+                            </div>
+                        </div>
+                        <div class="box-value" id="box-value-2">-</div>
+                        <div class="box-controls" id="box-controls-2" style="display: none;">
+                            <button class="action-btn hit-btn" data-box="2">Tirer</button>
+                            <button class="action-btn stand-btn" data-box="2">Rester</button>
+                            <button class="action-btn double-btn" data-box="2">Doubler</button>
+                            <button class="action-btn split-btn" data-box="2">Séparer</button>
+                            <button class="action-btn surrender-btn" data-box="2">Abandonner</button>
+                        </div>
+                    </div>
+
+                    <!-- Box 3 -->
+                    <div class="box" id="box-3" data-box="3">
+                        <div class="box-header">
+                            <span class="box-number">3</span>
+                            <div class="box-bet-controls">
+                                <button class="bet-btn" data-box="3" data-amount="5">5</button>
+                                <button class="bet-btn" data-box="3" data-amount="25">25</button>
+                                <button class="bet-btn" data-box="3" data-amount="100">100</button>
+                                <button class="bet-btn clear-bet" data-box="3">✕</button>
+                            </div>
+                        </div>
+                        <div class="box-bet" id="box-bet-3">0</div>
+                        <div class="box-cards" id="box-cards-3"></div>
+                        <div class="box-probabilities" id="box-probabilities-3" style="display: none;">
+                            <div class="probability-item">
+                                <span class="prob-label">Bust:</span>
+                                <span class="prob-value" id="prob-bust-3">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Gagner:</span>
+                                <span class="prob-value" id="prob-win-3">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Push:</span>
+                                <span class="prob-value" id="prob-push-3">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Recomm:</span>
+                                <span class="prob-value" id="prob-action-3">-</span>
+                            </div>
+                        </div>
+                        <div class="box-value" id="box-value-3">-</div>
+                        <div class="box-controls" id="box-controls-3" style="display: none;">
+                            <button class="action-btn hit-btn" data-box="3">Tirer</button>
+                            <button class="action-btn stand-btn" data-box="3">Rester</button>
+                            <button class="action-btn double-btn" data-box="3">Doubler</button>
+                            <button class="action-btn split-btn" data-box="3">Séparer</button>
+                            <button class="action-btn surrender-btn" data-box="3">Abandonner</button>
+                        </div>
+                    </div>
+
+                    <!-- Box 4 -->
+                    <div class="box" id="box-4" data-box="4">
+                        <div class="box-header">
+                            <span class="box-number">4</span>
+                            <div class="box-bet-controls">
+                                <button class="bet-btn" data-box="4" data-amount="5">5</button>
+                                <button class="bet-btn" data-box="4" data-amount="25">25</button>
+                                <button class="bet-btn" data-box="4" data-amount="100">100</button>
+                                <button class="bet-btn clear-bet" data-box="4">✕</button>
+                            </div>
+                        </div>
+                        <div class="box-bet" id="box-bet-4">0</div>
+                        <div class="box-cards" id="box-cards-4"></div>
+                        <div class="box-probabilities" id="box-probabilities-4" style="display: none;">
+                            <div class="probability-item">
+                                <span class="prob-label">Bust:</span>
+                                <span class="prob-value" id="prob-bust-4">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Gagner:</span>
+                                <span class="prob-value" id="prob-win-4">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Push:</span>
+                                <span class="prob-value" id="prob-push-4">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Recomm:</span>
+                                <span class="prob-value" id="prob-action-4">-</span>
+                            </div>
+                        </div>
+                        <div class="box-value" id="box-value-4">-</div>
+                        <div class="box-controls" id="box-controls-4" style="display: none;">
+                            <button class="action-btn hit-btn" data-box="4">Tirer</button>
+                            <button class="action-btn stand-btn" data-box="4">Rester</button>
+                            <button class="action-btn double-btn" data-box="4">Doubler</button>
+                            <button class="action-btn split-btn" data-box="4">Séparer</button>
+                            <button class="action-btn surrender-btn" data-box="4">Abandonner</button>
+                        </div>
+                    </div>
+
+                    <!-- Box 5 -->
+                    <div class="box" id="box-5" data-box="5">
+                        <div class="box-header">
+                            <span class="box-number">5</span>
+                            <div class="box-bet-controls">
+                                <button class="bet-btn" data-box="5" data-amount="5">5</button>
+                                <button class="bet-btn" data-box="5" data-amount="25">25</button>
+                                <button class="bet-btn" data-box="5" data-amount="100">100</button>
+                                <button class="bet-btn clear-bet" data-box="5">✕</button>
+                            </div>
+                        </div>
+                        <div class="box-bet" id="box-bet-5">0</div>
+                        <div class="box-cards" id="box-cards-5"></div>
+                        <div class="box-probabilities" id="box-probabilities-5" style="display: none;">
+                            <div class="probability-item">
+                                <span class="prob-label">Bust:</span>
+                                <span class="prob-value" id="prob-bust-5">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Gagner:</span>
+                                <span class="prob-value" id="prob-win-5">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Push:</span>
+                                <span class="prob-value" id="prob-push-5">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Recomm:</span>
+                                <span class="prob-value" id="prob-action-5">-</span>
+                            </div>
+                        </div>
+                        <div class="box-value" id="box-value-5">-</div>
+                        <div class="box-controls" id="box-controls-5" style="display: none;">
+                            <button class="action-btn hit-btn" data-box="5">Tirer</button>
+                            <button class="action-btn stand-btn" data-box="5">Rester</button>
+                            <button class="action-btn double-btn" data-box="5">Doubler</button>
+                            <button class="action-btn split-btn" data-box="5">Séparer</button>
+                            <button class="action-btn surrender-btn" data-box="5">Abandonner</button>
+                        </div>
+                    </div>
+
+                    <!-- Box 6 -->
+                    <div class="box" id="box-6" data-box="6">
+                        <div class="box-header">
+                            <span class="box-number">6</span>
+                            <div class="box-bet-controls">
+                                <button class="bet-btn" data-box="6" data-amount="5">5</button>
+                                <button class="bet-btn" data-box="6" data-amount="25">25</button>
+                                <button class="bet-btn" data-box="6" data-amount="100">100</button>
+                                <button class="bet-btn clear-bet" data-box="6">✕</button>
+                            </div>
+                        </div>
+                        <div class="box-bet" id="box-bet-6">0</div>
+                        <div class="box-cards" id="box-cards-6"></div>
+                        <div class="box-probabilities" id="box-probabilities-6" style="display: none;">
+                            <div class="probability-item">
+                                <span class="prob-label">Bust:</span>
+                                <span class="prob-value" id="prob-bust-6">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Gagner:</span>
+                                <span class="prob-value" id="prob-win-6">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Push:</span>
+                                <span class="prob-value" id="prob-push-6">-</span>
+                            </div>
+                            <div class="probability-item">
+                                <span class="prob-label">Recomm:</span>
+                                <span class="prob-value" id="prob-action-6">-</span>
+                            </div>
+                        </div>
+                        <div class="box-value" id="box-value-6">-</div>
+                        <div class="box-controls" id="box-controls-6" style="display: none;">
+                            <button class="action-btn hit-btn" data-box="6">Tirer</button>
+                            <button class="action-btn stand-btn" data-box="6">Rester</button>
+                            <button class="action-btn double-btn" data-box="6">Doubler</button>
+                            <button class="action-btn split-btn" data-box="6">Séparer</button>
+                            <button class="action-btn surrender-btn" data-box="6">Abandonner</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contrôles généraux -->
+                <div class="main-controls">
+                    <button id="deal" class="btn primary" disabled>Distribuer</button>
+                    <div class="bet-management">
+                        <button id="repeat-bets" class="btn secondary">🔄 Repeat Bets</button>
+                        <button id="clear-all-bets" class="btn secondary">❌ Clear All</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Zone de résultats améliorée -->
+        <div class="subtle-results" id="subtle-results" style="display: none;">
+            <div class="subtle-results-content">
+                <div class="result-icon" id="result-icon">🎰</div>
+                <div class="result-summary" id="result-summary"></div>
+                <div class="result-details" id="result-details"></div>
+            </div>
+        </div>
+
+        <!-- Zone de résultats -->
+        <div class="game-results" id="game-results" style="display: none;">
+            <div class="results-content">
+                <h3 id="results-title">Résultat de la partie</h3>
+                <div id="results-details"></div>
+                <div class="results-summary">
+                    <span id="results-credits">Solde: 1000</span>
+                </div>
+                <button id="results-close" class="btn">Fermer</button>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="message-overlay" id="message-overlay">
+            <div class="message-content">
+                <div class="message-text" id="message-content"></div>
+                <div class="message-buttons" id="message-buttons"></div>
+                <button class="message-close" id="message-close">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

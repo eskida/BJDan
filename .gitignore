@@ -1,0 +1,34 @@
+# Fichiers système macOS
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+
+# Dossiers système
+.Trash/
+.vscode/
+backup/
+
+# Fichiers de développement temporaires
+debug.html
+test*.html
+script-*.js
+*-backup.js
+*-broken.js
+*-old-*.js
+
+# Logs
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.temp
+
+# Environnements virtuels et dépendances
+node_modules/
+.env
+.env.local
+
+# Fichiers de build
+dist/
+build/

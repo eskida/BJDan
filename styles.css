@@ -1,0 +1,2683 @@
+/* Reset et base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: 
+        radial-gradient(ellipse at center, #1a5f3f 0%, #0d3d2a 50%, #051e15 100%),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 215, 0, 0.03) 2px,
+            rgba(255, 215, 0, 0.03) 4px
+        );
+    color: #f5f5f5;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(218, 165, 32, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(184, 134, 11, 0.06) 0%, transparent 50%),
+        url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="casino" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="2" fill="rgba(255,215,0,0.1)"/></pattern></defs><rect width="60" height="60" fill="url(%23casino)"/></svg>');
+    z-index: -1;
+    animation: casinoGlow 25s ease-in-out infinite;
+}
+
+@keyframes casinoGlow {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+@keyframes backgroundShift {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+}
+
+/* Effet de brillance dorée */
+@keyframes goldShimmer {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700, #b8860b);
+    background-size: 400% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+    animation: goldShimmer 3s ease-in-out infinite;
+    letter-spacing: 2px;
+}
+
+.credits {
+    display: flex;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+}
+
+.credits span {
+    background: linear-gradient(145deg, rgba(255,215,0,0.2), rgba(184,134,11,0.1));
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: 2px solid rgba(255,215,0,0.3);
+    backdrop-filter: blur(15px);
+    box-shadow: 
+        0 8px 20px rgba(0,0,0,0.3),
+        inset 0 2px 0 rgba(255,255,255,0.2),
+        inset 0 -2px 0 rgba(0,0,0,0.1);
+    color: #ffd700;
+    text-shadow: 
+        0 1px 2px rgba(0,0,0,0.5),
+        0 0 10px rgba(255,215,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.credits span::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: creditShine 3s ease-in-out infinite;
+}
+
+@keyframes creditShine {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+}
+
+.account-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.account-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(145deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+    color: white;
+    border: none;
+}
+
+.account-btn:hover {
+    background: linear-gradient(145deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.credits span::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.credits span:hover::before {
+    left: 100%;
+}
+
+.credits span:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+}
+
+/* Zone de jeu - Table de casino */
+.game-area {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 40px;
+    margin-bottom: 30px;
+    padding: 30px;
+    background: 
+        radial-gradient(ellipse at center, rgba(26, 95, 63, 0.8) 0%, rgba(13, 61, 42, 0.9) 70%),
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 1px,
+            rgba(255, 215, 0, 0.1) 1px,
+            rgba(255, 215, 0, 0.1) 2px
+        );
+    border-radius: 25px;
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.game-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+    border-radius: 22px;
+    pointer-events: none;
+}
+
+/* Sections croupier et joueur - Style feutre de casino */
+.dealer-section, .player-section {
+    background: 
+        linear-gradient(145deg, rgba(26, 95, 63, 0.6), rgba(13, 61, 42, 0.8)),
+        radial-gradient(circle at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.dealer-section::before, .player-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.03) 0%, transparent 70%);
+    border-radius: 18px;
+    pointer-events: none;
+}
+
+.dealer-section h2, .player-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+    color: #ffd700;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.5),
+        0 0 15px rgba(255, 215, 0, 0.3);
+    font-family: 'Georgia', serif;
+    letter-spacing: 1px;
+}
+
+/* Affichage de la mise dans la zone joueur */
+.bet-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.current-bet {
+    background: linear-gradient(145deg, rgba(255,215,0,0.2), rgba(184,134,11,0.15));
+    padding: 12px 30px;
+    border-radius: 20px;
+    border: 2px solid rgba(255,215,0,0.4);
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-shadow: 
+        0 1px 2px rgba(0,0,0,0.5),
+        0 0 10px rgba(255,215,0,0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 5px 15px rgba(255,215,0,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    position: relative;
+    display: inline-block;
+    font-family: 'Georgia', serif;
+}
+
+.current-bet::before {
+    content: '💰';
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.current-bet #bet {
+    color: #ffed4e;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255,237,78,0.5);
+}
+
+/* Zone d'assurance - Style casino élégant */
+.insurance-offer {
+    margin-top: 20px;
+    padding: 20px;
+    background: 
+        linear-gradient(145deg, rgba(255, 215, 0, 0.15), rgba(184, 134, 11, 0.1)),
+        radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    border: 3px solid #ffd700;
+    border-radius: 15px;
+    text-align: center;
+    animation: casinoPulse 2s ease-in-out infinite;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 10px 30px rgba(255, 215, 0, 0.2),
+        inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.insurance-offer::before {
+    content: '🎰';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    background: linear-gradient(145deg, #ffd700, #b8860b);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes casinoPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 
+            0 10px 30px rgba(255, 215, 0, 0.2),
+            inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 
+            0 15px 40px rgba(255, 215, 0, 0.3),
+            inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    }
+}
+
+.insurance-message {
+    color: #ffd700;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    text-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(255, 215, 0, 0.3);
+    font-family: 'Georgia', serif;
+}
+
+.insurance-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.insurance-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.insurance-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.insurance-btn:hover::before {
+    left: 100%;
+}
+
+#take-insurance {
+    background: linear-gradient(145deg, #ffd700, #b8860b);
+    color: #1a4d35;
+    border: 2px solid #b8860b;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+#take-insurance:hover {
+    background: linear-gradient(145deg, #ffed4e, #daa520);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+}
+
+#decline-insurance {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    color: #f5f5f5;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#decline-insurance:hover {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* Mains */
+.hands-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hand {
+    text-align: center;
+    min-width: 250px;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.hand.active {
+    border-color: #ffd700;
+    box-shadow: 0 0 15px rgba(255,215,0,0.5);
+}
+
+.hand-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.hand-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    background: rgba(255,255,255,0.2);
+    padding: 5px 15px;
+    border-radius: 15px;
+}
+
+.hand-bet {
+    font-size: 1.1rem;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+/* Cartes */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    min-height: 100px;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.card {
+    width: 80px;
+    height: 112px;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 50%, #e8e8e8 100%);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: black;
+    box-shadow: 
+        0 6px 20px rgba(0,0,0,0.4),
+        0 3px 8px rgba(0,0,0,0.2),
+        inset 0 2px 2px rgba(255,255,255,0.9),
+        inset 0 -1px 1px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    border: 3px solid #fff;
+    transform-style: preserve-3d;
+    font-family: 'Georgia', serif;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    background: linear-gradient(135deg, 
+        rgba(255,255,255,0.8) 0%, 
+        rgba(255,255,255,0.4) 30%, 
+        transparent 70%);
+    border-radius: 12px;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: translateY(-10px) rotateY(8deg) rotateX(5deg);
+    box-shadow: 
+        0 15px 35px rgba(0,0,0,0.5),
+        0 8px 15px rgba(0,0,0,0.3),
+        inset 0 2px 2px rgba(255,255,255,0.9);
+}
+
+.card-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+}
+
+.card-suit {
+    font-size: 1.5rem;
+    line-height: 1;
+    text-align: center;
+    margin-top: 5px;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
+}
+
+.card.red {
+    color: #dc143c;
+}
+
+.card.red .card-suit {
+    color: #e60026;
+    text-shadow: 0 1px 2px rgba(230, 0, 38, 0.3);
+}
+
+.card:not(.red) .card-suit {
+    color: #1a1a1a;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation de distribution des cartes */
+.card.dealing {
+    animation: cardDeal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transform: 
+        translateX(-200px) 
+        translateY(-100px) 
+        rotateY(-90deg) 
+        rotateZ(45deg) 
+        scale(0.5);
+    opacity: 0;
+}
+
+@keyframes cardDeal {
+    0% {
+        transform: 
+            translateX(-200px) 
+            translateY(-100px) 
+            rotateY(-90deg) 
+            rotateZ(45deg) 
+            scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: 
+            translateX(-50px) 
+            translateY(-20px) 
+            rotateY(-20deg) 
+            rotateZ(10deg) 
+            scale(0.8);
+        opacity: 0.7;
+    }
+    100% {
+        transform: 
+            translateX(0) 
+            translateY(0) 
+            rotateY(0deg) 
+            rotateZ(0deg) 
+            scale(1);
+        opacity: 1;
+    }
+}
+
+.card.hidden {
+    background: linear-gradient(145deg, #1a472a 0%, #2d5a3d 100%);
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 8px,
+            rgba(255,255,255,0.1) 8px,
+            rgba(255,255,255,0.1) 16px
+        );
+    color: #4caf50;
+    border-color: #4caf50;
+}
+
+.card.hidden::after {
+    content: "🃏";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: #4caf50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    animation: cardGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes cardGlow {
+    from { text-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+    to { text-shadow: 0 0 20px rgba(76, 175, 80, 0.8), 0 0 30px rgba(76, 175, 80, 0.3); }
+}
+
+.card-value {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 900;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.card-suit {
+    font-size: 1.8rem;
+    text-align: center;
+    filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
+}
+
+/* Actions - Panel de contrôle casino */
+.actions {
+    background: 
+        linear-gradient(145deg, rgba(26, 95, 63, 0.7), rgba(13, 61, 42, 0.9)),
+        radial-gradient(circle at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.actions::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.06) 0%, transparent 50%);
+    border-radius: 18px;
+    pointer-events: none;
+}
+
+/* Contrôles des cases */
+.box-controls {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 215, 0, 0.2);
+}
+
+.box-controls h4 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    font-family: 'Georgia', serif;
+}
+
+.box-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.box-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: linear-gradient(145deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+    color: #f5f5f5;
+    border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.box-btn:hover {
+    transform: translateY(-2px) scale(1.1);
+    background: linear-gradient(145deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.box-btn.active {
+    background: linear-gradient(145deg, #ffd700, #b8860b);
+    color: #1a4d35;
+    border-color: #b8860b;
+    box-shadow: 
+        0 8px 20px rgba(255, 215, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.box-btn.active:hover {
+    background: linear-gradient(145deg, #ffed4e, #daa520);
+}
+
+.betting-controls, .game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.game-controls {
+    margin-bottom: 0;
+}
+
+/* Boutons de mise - Style jetons de casino */
+.bet-btn {
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.2),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+    transform: perspective(100px) rotateX(15deg);
+}
+
+.bet-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    z-index: 1;
+}
+
+.bet-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 2;
+}
+
+/* Couleurs des jetons */
+#bet-5 {
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #d63384, #8b1538);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#bet-10 {
+    background: radial-gradient(circle at 30% 30%, #4dabf7, #339af0, #1971c2);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#bet-25 {
+    background: radial-gradient(circle at 30% 30%, #51cf66, #40c057, #37b24d);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#bet-50 {
+    background: radial-gradient(circle at 30% 30%, #ffd43b, #fab005, #f59f00);
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+#bet-max {
+    background: radial-gradient(circle at 30% 30%, #e599f7, #d0ebff, #a5d8ff);
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+    font-size: 0.7rem;
+}
+
+#clear-bet {
+    background: radial-gradient(circle at 30% 30%, #6c757d, #495057, #343a40);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    font-size: 0.7rem;
+}
+
+.bet-btn:hover {
+    transform: perspective(100px) rotateX(15deg) translateY(-8px) scale(1.1);
+    box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.4),
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.bet-btn:active {
+    transform: perspective(100px) rotateX(15deg) translateY(-2px) scale(0.95);
+    transition: all 0.1s ease;
+}
+
+/* Boutons de jeu - Style casino élégant */
+.btn {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    color: #f5f5f5;
+    border: 2px solid rgba(255,255,255,0.2);
+    position: relative;
+    overflow: hidden;
+    min-width: 100px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    background: linear-gradient(145deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        0 4px 10px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255,255,255,0.4);
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    background: rgba(100, 100, 100, 0.2);
+    border-color: rgba(100, 100, 100, 0.3);
+}
+
+.btn:disabled::before {
+    display: none;
+}
+
+.btn.primary {
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+    border-color: #27ae60;
+    color: white;
+    box-shadow: 
+        0 4px 15px rgba(46, 204, 113, 0.3),
+        0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn.primary:hover {
+    background: linear-gradient(145deg, #27ae60, #229954);
+    box-shadow: 
+        0 8px 25px rgba(46, 204, 113, 0.4),
+        0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn.info {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    border-color: #2980b9;
+    color: white;
+    box-shadow: 
+        0 4px 15px rgba(52, 152, 219, 0.3),
+        0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn.info:hover {
+    background: linear-gradient(145deg, #2980b9, #1f4e79);
+    box-shadow: 
+        0 8px 25px rgba(52, 152, 219, 0.4),
+        0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Styles spécifiques pour chaque bouton de jeu */
+#hit {
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    border-color: #c0392b;
+}
+
+#hit:hover {
+    background: linear-gradient(145deg, #c0392b, #a93226);
+}
+
+#stand {
+    background: linear-gradient(145deg, #f39c12, #e67e22);
+    border-color: #e67e22;
+}
+
+#stand:hover {
+    background: linear-gradient(145deg, #e67e22, #d68910);
+}
+
+#double {
+    background: linear-gradient(145deg, #9b59b6, #8e44ad);
+    border-color: #8e44ad;
+}
+
+#double:hover {
+    background: linear-gradient(145deg, #8e44ad, #7d3c98);
+}
+
+#split {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    border-color: #2980b9;
+}
+
+#split:hover {
+    background: linear-gradient(145deg, #2980b9, #2471a3);
+}
+
+#surrender {
+    background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+    border-color: #7f8c8d;
+}
+
+#surrender:hover {
+    background: linear-gradient(145deg, #7f8c8d, #708090);
+}
+
+#insurance {
+    background: linear-gradient(145deg, #f1c40f, #f39c12);
+    border-color: #f39c12;
+    color: #333;
+}
+
+#insurance:hover {
+    background: linear-gradient(145deg, #f39c12, #e67e22);
+}
+
+.bet-btn:hover {
+    background: #f57c00;
+}
+
+/* Zone de résultats - Modal centré */
+.game-results {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: 
+        linear-gradient(145deg, rgba(26, 95, 63, 0.95), rgba(13, 61, 42, 0.98)),
+        radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+    border-radius: 25px;
+    padding: 30px;
+    backdrop-filter: blur(20px);
+    border: 3px solid rgba(255, 215, 0, 0.4);
+    max-width: 500px;
+    min-width: 400px;
+    text-align: center;
+    animation: resultModalIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.6),
+        0 15px 30px rgba(0, 0, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    position: relative;
+}
+
+.game-results::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+    animation: overlayFadeIn 0.4s ease-out;
+}
+
+@keyframes resultModalIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) rotateY(-45deg);
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(1.05) rotateY(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotateY(0deg);
+    }
+}
+
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.results-content h3 {
+    color: #ffd700;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.5),
+        0 0 15px rgba(255, 215, 0, 0.4);
+    font-family: 'Georgia', serif;
+}
+
+.results-details {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: #f5f5f5;
+}
+
+.results-details div {
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.results-details div:last-child {
+    border-bottom: none;
+}
+
+.results-summary {
+    padding-top: 20px;
+    border-top: 2px solid rgba(255, 215, 0, 0.3);
+    font-weight: bold;
+    color: #ffd700;
+    font-size: 1.3rem;
+    text-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(255, 215, 0, 0.3);
+    font-family: 'Georgia', serif;
+}
+
+.results-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.results-close:hover {
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+    transform: rotate(90deg);
+}
+
+/* Messages */
+
+@keyframes strategyPulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
+    }
+    50% { 
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(255, 23, 68, 1);
+    }
+}
+
+/* Légende de la stratégie */
+.strategy-legend {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.strategy-legend h3 {
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-cell {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.legend-item span:last-child {
+    color: #e0e0e0;
+    font-size: 0.9em;
+}
+
+/* Messages */
+.message-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+    backdrop-filter: blur(3px);
+}
+
+.message-overlay.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message {
+    background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(240,240,240,0.95));
+    color: #1a4d35;
+    padding: 25px 40px 25px 25px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    border: 3px solid #1a4d35;
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.8),
+        0 0 20px rgba(26,77,53,0.3),
+        inset 0 1px 1px rgba(255,255,255,0.8);
+    max-width: 80vw;
+    white-space: pre-line;
+    animation: messageAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    transform: none;
+}
+
+.message-content {
+    padding-right: 30px;
+    margin-bottom: 15px;
+}
+
+.message-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.message-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.message-btn.confirm {
+    background: #dc3545;
+    color: white;
+}
+
+.message-btn.confirm:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.message-btn.cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.message-btn.cancel:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+}
+
+.message-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1a4d35;
+    cursor: pointer;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.message-close:hover {
+    background-color: rgba(26, 77, 53, 0.1);
+    transform: scale(1.1);
+}
+
+.message-close:active {
+    transform: scale(0.95);
+}
+
+@keyframes messageAppear {
+    from {
+        transform: scale(0.3) rotate(10deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.message.visible {
+    display: block;
+}
+
+.message::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #1a4d35, #2a6d4f, #1a4d35);
+    border-radius: 15px;
+    z-index: -1;
+    animation: borderGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlow {
+    from { filter: brightness(1); }
+    to { filter: brightness(1.3); }
+}
+
+/* Valeur de la main */
+.box-value {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f5f5f5;
+    margin-bottom: 10px;
+}
+
+/* Probabilités des boxes */
+.box-probabilities {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 215, 0, 0.6);
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 120px;
+    max-width: 140px;
+    backdrop-filter: blur(5px);
+    animation: fadeInRight 0.3s ease-out;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    font-size: 0.8rem;
+}
+
+.probability-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 0.75rem;
+    line-height: 1.1;
+}
+
+.probability-item:last-child {
+    margin-bottom: 0;
+    border-top: 1px solid rgba(255, 215, 0, 0.3);
+    padding-top: 3px;
+    margin-top: 3px;
+    font-weight: bold;
+}
+
+.prob-label {
+    color: #ccc;
+    font-weight: normal;
+}
+
+.prob-value {
+    color: #ffd700;
+    font-weight: bold;
+    text-align: right;
+    min-width: 45px;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+/* Bouton de basculement des probabilités */
+.probability-btn {
+    background: linear-gradient(145deg, #2a7a4a, #1a5a3a) !important;
+    border: 2px solid #ffd700 !important;
+}
+
+.probability-btn.active {
+    background: linear-gradient(145deg, #ffd700, #e6c200) !important;
+    color: #1a5a3a !important;
+}
+
+/* Résultats subtils et centrés */
+.subtle-results {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(20, 30, 20, 0.95);
+    border: 2px solid rgba(255, 215, 0, 0.6);
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 400px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    animation: subtleResultsIn 0.4s ease-out;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.subtle-results-content {
+    color: #f5f5f5;
+}
+
+.result-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    animation: iconPulse 0.6s ease-out;
+}
+
+.result-summary {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ffd700;
+}
+
+.result-details {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #ddd;
+}
+
+@keyframes subtleResultsIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* ==================== 6 BOXES CASINO LAYOUT ==================== */
+
+/* Section des boxes */
+.boxes-section {
+    margin: 40px 0;
+}
+
+/* Container principal des 6 boxes en grille 3x2 */
+.boxes-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Style principal de chaque box */
+.box {
+    position: relative;
+    background: linear-gradient(145deg, rgba(26, 77, 53, 0.8), rgba(13, 48, 34, 0.9));
+    border: 3px solid rgba(255, 215, 0, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Animation au survol */
+.box:hover {
+    border-color: rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Box avec mise active */
+.box.has-bet {
+    border-color: rgba(255, 215, 0, 0.6);
+    background: linear-gradient(145deg, rgba(26, 77, 53, 0.9), rgba(13, 48, 34, 1));
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Box actuellement active pour le jeu */
+.box.active {
+    border-color: rgba(255, 215, 0, 0.8) !important;
+    background: linear-gradient(145deg, rgba(36, 87, 63, 0.9), rgba(23, 58, 44, 1)) !important;
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.6),
+        0 0 25px rgba(255, 215, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-3px);
+}
+
+/* En-tête de chaque box */
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Numéro de la box */
+.box-number {
+    background: linear-gradient(145deg, #ffd700, #e6c200);
+    color: #1a4d35;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Contrôles de mise dans l'en-tête */
+.box-bet-controls {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+/* Boutons de mise */
+.bet-btn {
+    width: 35px;
+    height: 35px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    background: linear-gradient(145deg, rgba(26, 77, 53, 0.8), rgba(13, 48, 34, 0.9));
+    color: #ffd700;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bet-btn:hover {
+    border-color: rgba(255, 215, 0, 0.6);
+    background: linear-gradient(145deg, rgba(36, 87, 63, 0.9), rgba(23, 58, 44, 1));
+    transform: translateY(-1px);
+}
+
+.bet-btn.clear-bet {
+    background: linear-gradient(145deg, rgba(220, 53, 69, 0.8), rgba(180, 43, 59, 0.9));
+    color: white;
+    border-color: rgba(220, 53, 69, 0.5);
+}
+
+.bet-btn.clear-bet:hover {
+    border-color: rgba(220, 53, 69, 0.8);
+    background: linear-gradient(145deg, rgba(240, 63, 79, 0.9), rgba(200, 53, 69, 1));
+}
+
+/* Affichage de la mise */
+.box-bet {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffd700;
+    margin: 10px 0;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.box-bet::before {
+    content: '💰 ';
+    margin-right: 5px;
+}
+
+/* Zone des cartes */
+.box-cards {
+    min-height: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    margin: 15px 0;
+    position: relative;
+}
+
+/* Affichage des mains splittées */
+.hand-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    margin: 5px;
+    background: rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.hand-container.active-hand {
+    border-color: rgba(255, 215, 0, 0.8);
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.hand-label {
+    font-size: 0.8rem;
+    color: #ffd700;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.hand-cards {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.hand-value {
+    font-size: 0.9rem;
+    color: #f5f5f5;
+    font-weight: bold;
+}
+
+/* Valeur de la main */
+.box-value {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #f5f5f5;
+    margin-bottom: 10px;
+}
+
+/* Contrôles d'action de chaque box */
+.box-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.action-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: linear-gradient(145deg, rgba(26, 77, 53, 0.8), rgba(13, 48, 34, 0.9));
+    color: #ffd700;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    min-width: 70px;
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 215, 0, 0.6);
+    background: linear-gradient(145deg, rgba(36, 87, 63, 0.9), rgba(23, 58, 44, 1));
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Styles spécifiques par type de bouton */
+.hit-btn {
+    background: linear-gradient(145deg, #3498db, #2980b9) !important;
+    border-color: #2980b9 !important;
+    color: white !important;
+}
+
+.stand-btn {
+    background: linear-gradient(145deg, #e74c3c, #c0392b) !important;
+    border-color: #c0392b !important;
+    color: white !important;
+}
+
+.double-btn {
+    background: linear-gradient(145deg, #f39c12, #e67e22) !important;
+    border-color: #e67e22 !important;
+    color: white !important;
+}
+
+.split-btn {
+    background: linear-gradient(145deg, #9b59b6, #8e44ad) !important;
+    border-color: #8e44ad !important;
+    color: white !important;
+}
+
+.surrender-btn {
+    background: linear-gradient(145deg, #95a5a6, #7f8c8d) !important;
+    border-color: #7f8c8d !important;
+    color: white !important;
+}
+
+/* Tableau de stratégie */
+.strategy-table {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(13, 48, 34, 0.98);
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.strategy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    padding-bottom: 10px;
+}
+
+.strategy-header h3 {
+    color: #ffd700;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    background: rgba(255, 0, 0, 0.7);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    background: rgba(255, 0, 0, 0.9);
+}
+
+.strategy-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.strategy-section {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.strategy-section h4 {
+    color: #ffd700;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.strategy-chart {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.3);
+}
+
+.strategy-chart th,
+.strategy-chart td {
+    padding: 8px 6px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.3);
+    min-width: 30px;
+}
+
+.strategy-chart th {
+    background: rgba(255,215,0,0.2);
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.strategy-chart td:first-child {
+    background: rgba(255,215,0,0.1);
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.strategy-legend {
+    background: rgba(255,215,0,0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.strategy-legend p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+/* Modal des statistiques */
+.stats-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats-content {
+    background: rgba(13, 48, 34, 0.98);
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    padding-bottom: 15px;
+}
+
+.stats-header h3 {
+    color: #ffd700;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    border-color: rgba(255, 215, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px);
+}
+
+.stat-card h4 {
+    color: #ffd700;
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.stat-number.positive {
+    color: #4CAF50;
+}
+
+.stat-number.negative {
+    color: #f44336;
+}
+
+.stat-percent {
+    display: block;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Animation pour les blackjacks */
+@keyframes blackjackPulse {
+    0% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+    }
+    25% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    50% { 
+        transform: scale(1.1);
+        box-shadow: 0 0 0 40px rgba(255, 215, 0, 0.1);
+    }
+    75% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    100% { 
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+.blackjack-animation {
+    animation: blackjackPulse 2s ease-in-out;
+    border: 3px solid #FFD700 !important;
+    background: linear-gradient(135deg, 
+        rgba(255, 215, 0, 0.2) 0%, 
+        rgba(218, 165, 32, 0.1) 100%) !important;
+}
+
+/* Résultats sur les boxes */
+.box-result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #FFD700;
+    border-radius: 15px;
+    padding: 15px 20px;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.box-result.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.box-result .result-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.box-result .result-text {
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Animation d'entrée pour les résultats */
+@keyframes resultSlideIn {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.box-result.show {
+    animation: resultSlideIn 0.5s ease-out;
+}
+
+/* Bouton Nouvelle Manche */
+.new-round-button {
+    display: none;
+    margin: 20px auto;
+    padding: 15px 30px;
+    background: linear-gradient(145deg, #2c6e49, #1a5f3f);
+    color: #ffd700;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.new-round-button:hover {
+    background: linear-gradient(145deg, #1a5f3f, #2c6e49);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 20px rgba(0, 0, 0, 0.4),
+        inset 0 2px 0 rgba(255, 215, 0, 0.4);
+}
+
+.new-round-button:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 2px 0 rgba(255, 215, 0, 0.2);
+}
+
+/* ================================================
+   RESPONSIVE DESIGN - VERSION MOBILE
+   ================================================ */
+
+/* Tablettes et petits écrans */
+@media screen and (max-width: 1024px) {
+    .container {
+        max-width: 95%;
+        padding: 15px;
+    }
+    
+    .game-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .game-controls {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .game-controls > * {
+        flex: 1 1 calc(50% - 5px);
+        min-width: 120px;
+    }
+}
+
+/* Smartphones en mode paysage */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 10px;
+        margin: 0;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    
+    /* Layout mobile pour le plateau de jeu */
+    .game-board {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    
+    /* Boxes de jeu plus compactes */
+    .game-box {
+        min-height: 140px;
+        padding: 12px;
+        border-radius: 12px;
+    }
+    
+    .box-header {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+    
+    .box-cards {
+        min-height: 60px;
+        gap: 4px;
+        margin: 8px 0;
+    }
+    
+    .card {
+        width: 35px;
+        height: 50px;
+        font-size: 0.7rem;
+        border-radius: 4px;
+    }
+    
+    .card-value {
+        font-size: 0.8rem;
+        line-height: 1;
+    }
+    
+    .card-suit {
+        font-size: 0.7rem;
+        line-height: 1;
+    }
+    
+    .box-value {
+        font-size: 1rem;
+        margin: 5px 0;
+    }
+    
+    .box-bet {
+        font-size: 0.9rem;
+    }
+    
+    /* Section croupier mobile */
+    .dealer-section {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+    }
+    
+    .dealer-cards {
+        min-height: 60px;
+        gap: 4px;
+        margin: 10px 0;
+    }
+    
+    .dealer-value {
+        font-size: 1.1rem;
+    }
+    
+    /* Contrôles de jeu mobile */
+    .game-controls {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px;
+        border-radius: 15px;
+        margin: 15px 0;
+        backdrop-filter: blur(10px);
+    }
+    
+    .controls-row {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .betting-controls {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+    
+    .bet-btn {
+        padding: 12px 8px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        min-height: 44px;
+    }
+    
+    .main-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+    }
+    
+    .main-controls button {
+        flex: 1 1 calc(50% - 4px);
+        min-width: 120px;
+        min-height: 44px;
+        padding: 12px 8px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+    
+    /* Contrôles des boxes mobiles */
+    .box-controls {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 8px;
+        border-radius: 10px;
+        margin-top: 8px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+    
+    .box-controls button {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        min-height: 36px;
+        border-radius: 6px;
+        margin: 2px;
+    }
+    
+    /* Informations de jeu mobile */
+    .game-info {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .credits-display {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    /* Probabilités mobile */
+    .box-probabilities {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 6px;
+        border-radius: 6px;
+        margin-top: 5px;
+        font-size: 0.7rem;
+    }
+    
+    .probability-item {
+        margin: 2px 0;
+    }
+    
+    /* Modales mobile */
+    .stats-modal {
+        padding: 10px;
+    }
+    
+    .stats-content {
+        max-width: 95vw;
+        max-height: 90vh;
+        margin: 5vh auto;
+        border-radius: 15px;
+        overflow-y: auto;
+    }
+    
+    .stats-header {
+        padding: 15px;
+        text-align: center;
+    }
+    
+    .stats-header h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+    
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .stat-card {
+        padding: 12px;
+        border-radius: 10px;
+    }
+    
+    .stat-card h4 {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    
+    .stat-number {
+        font-size: 1.2rem;
+    }
+    
+    .stat-percent {
+        font-size: 0.8rem;
+    }
+    
+    /* Tableaux de stratégie mobile */
+    .strategy-chart {
+        font-size: 0.7rem;
+        margin: 10px 0;
+    }
+    
+    .strategy-chart th,
+    .strategy-chart td {
+        padding: 4px 2px;
+        min-width: 25px;
+    }
+    
+    /* Messages mobile */
+    .message-overlay {
+        padding: 20px;
+    }
+    
+    .message-content {
+        max-width: 90vw;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+    }
+    
+    /* Bouton nouvelle manche mobile */
+    .new-round-button {
+        width: 90%;
+        max-width: 300px;
+        padding: 15px 20px;
+        font-size: 1.1rem;
+        margin: 20px auto;
+        display: block;
+    }
+}
+
+/* Smartphones en mode portrait */
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 13px;
+    }
+    
+    .container {
+        padding: 8px;
+    }
+    
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+    
+    /* Layout ultra-compact pour très petits écrans */
+    .game-board {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    
+    .game-box {
+        min-height: 120px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    
+    .box-header {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+    }
+    
+    .card {
+        width: 30px;
+        height: 42px;
+        font-size: 0.6rem;
+    }
+    
+    .card-value {
+        font-size: 0.7rem;
+    }
+    
+    .card-suit {
+        font-size: 0.6rem;
+    }
+    
+    .box-value {
+        font-size: 0.9rem;
+        margin: 4px 0;
+    }
+    
+    .box-bet {
+        font-size: 0.8rem;
+    }
+    
+    /* Section croupier ultra-compact */
+    .dealer-section {
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+    }
+    
+    .dealer-cards {
+        min-height: 50px;
+        gap: 3px;
+        margin: 8px 0;
+    }
+    
+    .dealer-value {
+        font-size: 1rem;
+    }
+    
+    /* Probabilités ultra-compactes */
+    .box-probabilities {
+        padding: 4px;
+        font-size: 0.6rem;
+        border-radius: 4px;
+    }
+    
+    .probability-item {
+        margin: 1px 0;
+    }
+    
+    /* Modales ultra-compactes */
+    .stats-content {
+        max-width: 98vw;
+        margin: 2vh auto;
+    }
+    
+    .stats-header {
+        padding: 12px;
+    }
+    
+    .stats-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .stat-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 8px;
+    }
+    
+    .stat-card {
+        padding: 10px;
+        text-align: center;
+    }
+    
+    .stat-card h4 {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+    
+    .stat-number {
+        font-size: 1.1rem;
+    }
+    
+    .stat-percent {
+        font-size: 0.7rem;
+    }
+    
+    /* Tableaux de stratégie ultra-compacts */
+    .strategy-chart {
+        font-size: 0.6rem;
+        overflow-x: auto;
+        display: block;
+        white-space: nowrap;
+    }
+    
+    .strategy-chart th,
+    .strategy-chart td {
+        padding: 3px 1px;
+        min-width: 20px;
+    }
+    
+    /* Messages ultra-compacts */
+    .message-overlay {
+        padding: 15px;
+    }
+    
+    .message-content {
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+    }
+    
+    /* Interface tactile améliorée */
+    button, .bet-btn, .card {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Animations optimisées pour mobile */
+    .card.dealing {
+        animation-duration: 0.6s;
+    }
+    
+    .blackjack-animation {
+        animation-duration: 1.5s;
+    }
+    
+    /* Résultats optimisés pour mobile */
+    .box-result {
+        padding: 10px 15px;
+        border-radius: 10px;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    
+    .box-result.show {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .box-result .result-icon {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+    
+    .box-result .result-text {
+        font-size: 14px;
+    }
+}
+
+/* Mode paysage sur mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .game-board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    
+    .game-box {
+        min-height: 100px;
+    }
+    
+    .card {
+        width: 28px;
+        height: 40px;
+    }
+    
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+    }
+    
+    .dealer-section {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .game-controls {
+        padding: 10px;
+        margin: 10px 0;
+    }
+}
+
+/* Amélioration de l'accessibilité tactile */
+@media (hover: none) and (pointer: coarse) {
+    /* Interface tactile pure */
+    button:hover {
+        transform: none;
+    }
+    
+    button:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+    
+    .bet-btn:active,
+    .main-controls button:active,
+    .box-controls button:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Feedback tactile amélioré */
+    .card:active {
+        transform: scale(1.05);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* Mode sombre forcé sur mobile (si supporté) */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #0a0a0a;
+    }
+    
+    .game-box {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        border-color: rgba(255, 215, 0, 0.4);
+    }
+    
+    .dealer-section {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        border-color: rgba(255, 215, 0, 0.4);
+    }
+}
+
+/* Optimisations tactiles */
+.card-touched {
+    transform: scale(1.05) !important;
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4) !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Variables CSS pour la hauteur de viewport mobile */
+:root {
+    --vh: 1vh;
+}
+
+/* Classe pour les appareils mobiles */
+.mobile-device {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.mobile-device * {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Améliorations pour les boutons sur mobile */
+.mobile-device .btn,
+.mobile-device .box-controls button {
+    touch-action: manipulation;
+    cursor: pointer;
+    min-height: 44px; /* Taille minimum recommandée Apple */
+    min-width: 44px;
+}
+
+.mobile-device .btn:active,
+.mobile-device .box-controls button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+/* Zone de jeu adaptative */
+.mobile-device .game-area {
+    min-height: calc(var(--vh, 1vh) * 100 - 120px);
+}
+
+/* Scroll horizontal amélioré pour les boxes sur mobile */
+@media (max-width: 768px) {
+    .mobile-device .boxes-container {
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .mobile-device .game-box {
+        scroll-snap-align: center;
+        min-width: 280px;
+    }
+    
+    /* Indicateur de scroll */
+    .mobile-device .boxes-container::after {
+        content: '';
+        position: sticky;
+        right: 0;
+        top: 50%;
+        width: 20px;
+        height: 40px;
+        background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+        pointer-events: none;
+        border-radius: 10px 0 0 10px;
+    }
+}
+
+/* Feedback visuel amélioré pour les cartes sur mobile */
+@media (hover: none) and (pointer: coarse) {
+    .card:active {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    }
+}
+
+/* Optimisation des notifications sur mobile */
+.mobile-device .notification {
+    bottom: 20px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: none !important;
+    font-size: 16px !important; /* Éviter le zoom automatique iOS */
+}
+
+/* Styles pour l'orientation paysage sur mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .mobile-device .header {
+        padding: 5px 10px;
+        font-size: 0.9em;
+    }
+    
+    .mobile-device .game-area {
+        min-height: calc(100vh - 80px);
+    }
+    
+    .mobile-device .game-box {
+        min-height: 200px;
+    }
+    
+    .mobile-device .controls {
+        padding: 5px;
+    }
+}
